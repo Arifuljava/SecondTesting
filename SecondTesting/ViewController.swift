@@ -6,15 +6,220 @@
 //
 
 import UIKit
+import CoreBluetooth
 
-class ViewController: UIViewController {
+class ViewController: UIViewController ,  CBCentralManagerDelegate, CBPeripheralDelegate, UITableViewDelegate, UITableViewDataSource{
+    var coreCenter = CBCentralManager();
+    private var centralManager: CBCentralManager?
+          private var discoveredPeripherals: [CBPeripheral] = []
+    //cnc
+      var manager:CBCentralManager!
+      var peripheral:CBPeripheral!
 
-    @IBOutlet weak var tableview: UITableView!
+      let BEAN_NAME = "AC695X_1(BLE)"
+      var myCharacteristic : CBCharacteristic!
+          
+          var isMyPeripheralConected = false
+    
+
+   
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        tableView.delegate = self
+                     tableView.dataSource = self
+                centralManager = CBCentralManager(delegate: self, queue: DispatchQueue.main)
+                               tableView.delegate = self
+                               tableView.dataSource = self
+
+                        // Do any additional setup after loading the view.
+                        
+                        manager = CBCentralManager(delegate: self, queue: nil)
     }
+    @objc func centralManagerDidUpdateState(_ central: CBCentralManager) {
+                if central.state == .poweredOn {
+                    if let peripheral = peripheral {
+                                if peripheral.state == .connected {
+                                    // The peripheral is connected
+                                    print("Peripheral is connected.")
+                                } else {
+                                    // The peripheral is not connected
+                                    print("Peripheral is not connected.")
+                                    central.scanForPeripherals(withServices: nil, options: nil)
+                                }
+                            } else {
+                                // No peripheral is currently assigned
+                                print("No peripheral assigned.")
+                                central.scanForPeripherals(withServices: nil, options: nil)
+                            }
+                    
+                } else {
+                    print("Bluetooth is not available.")
+                }
+            }
+    func cancelPeripheralConnection(_ peripheral: CBPeripheral)
+    {
+        
+        discoveredPeripherals.dropFirst()
+        print("discc")
+    }
+       func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+                  if !discoveredPeripherals.contains(peripheral) {
+                     
+                      discoveredPeripherals.append(peripheral)
+                      tableView.reloadData()
+                      
+                  }
+                 
+           
+           
+                //  print(mainflagg.description)
+                  if peripheral.name?.contains("AC695X_1(BLE)") == true {
+                     
+                      manager.cancelPeripheralConnection(peripheral)
+                      manager.cancelPeripheralConnection(peripheral)
+                     
+                   
+                              self.peripheral = peripheral
+                              self.peripheral.delegate = self
 
-
+                              manager.connect(peripheral, options: nil)
+                      peripheral.delegate = self
+                      peripheral.discoverServices(nil)
+                   
+                              print("My  discover peripheral", peripheral)
+                      self.manager.stopScan()
+      //check pherifiral
+                     
+                      
+                      
+                          }
+                  
+                  
+                  
+       }
+    func cancelConnection() {
+        //peripheral.writeValue(x, for: y, type: .withResponse)
+    }
+       //
+       // MARK: - UITableViewDelegate & UITableViewDataSource
+     @objc  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+          let peripheral = discoveredPeripherals[indexPath.row]
+          let devicename = peripheral.identifier.uuidString
+        
+         
+          
+      }
+          
+        @objc   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+             /// print("se")
+              return discoveredPeripherals.count
+          }
+          
+         @objc func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+              let cell = tableView.dequeueReusableCell(withIdentifier: "celll", for: indexPath)
+              let peripheral = discoveredPeripherals[indexPath.row]
+              cell.textLabel?.text = peripheral.name ?? "Unknown Device"
+              cell.detailTextLabel?.text = peripheral.identifier.uuidString
+            
+              return cell
+          }
+      func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
+          if let error = error {
+              print("Failed to connect to peripheral: \(error.localizedDescription)")
+          } else {
+              print("Failed to connect to peripheral")
+          }
+          // Perform any necessary error handling or recovery steps
+      }
+     
+      
+      
+     @objc  func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+               isMyPeripheralConected = true //when connected change to true
+               peripheral.delegate = self
+               peripheral.discoverServices(nil)
+           
+       
+           print("Conn \(peripheral)")
+           var statusMessage = "Connected Successfully with this device : "+BEAN_NAME.description
+         
+           
+           
+     }
+    
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+              isMyPeripheralConected = false //and to falso when disconnected
+              var statusMessage = "Can't  connected with this device : "+BEAN_NAME.description
+            
+              print("dis")
+          }
+      func centralManager(_ central: CBCentralManager, connectionEventDidOccur event: CBConnectionEvent, for peripheral: CBPeripheral) {
+          print("not connect")
+      }
+       
+       func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+                    guard let services = peripheral.services else { return }
+                    
+                    for service in services {
+                      peripheral.discoverCharacteristics(nil, for: service)
+                        print("Discoveri")
+                    }
+                }
+       private var printerCharacteristic: CBCharacteristic!
+       func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+                   guard let characteristics = service.characteristics else { return }
+                   
+                   for characteristic in characteristics {
+                       if characteristic.properties.contains(.writeWithoutResponse) {
+                           printerCharacteristic = characteristic
+                           var ttt = "fggfgfg"
+                           guard let data = ttt.data(using: .utf8) else { return }
+                           
+                           peripheral.writeValue(data, for: printerCharacteristic, type: .withoutResponse)
+                           print("print ready")
+                           break
+                       }
+                   }
+           
+    /*
+     func convertImageToRaster(image: UIImage, width: Int) -> [UInt8]? {
+       
+         // Resize the image to the desired width while maintaining the aspect ratio
+         let targetSize = CGSize(width: 200, height: 200) // Set the desired dimensions
+         let resizedImage =
+         // Convert the image to grayscale
+         guard let grayscaleImage = resizedImage.convertToGrayscale() else {
+             return nil
+         }
+         
+         // Convert the grayscale image to raster format
+         guard let rasterBytes = grayscaleImage.convertToRaster() else {
+             return nil
+         }
+         
+         return rasterBytes
+      
+         return rasterBytes
+     }
+     */
+    func printImageOnPrinter(rasterBytes: [UInt8], on peripheral: CBPeripheral, with characteristic: CBCharacteristic) {
+        // Create the ESC/POS command for printing raster data
+        var command: [UInt8] = []
+        command.append(0x1B) // ESC character
+        command.append(0x2A) // "*" character
+        command.append(0x21) // "!" character
+        command.append(UInt8(rasterBytes.count & 0xFF)) // LSB of raster data length
+        command.append(UInt8((rasterBytes.count >> 8) & 0xFF)) // MSB of raster data length
+        command += rasterBytes // Append the raster data
+        
+        // Send the command to the printer characteristic
+        let data = Data(bytes: command)
+        peripheral.writeValue(data, for: characteristic, type: .withoutResponse)
+    }
+   
 }
 
+}
