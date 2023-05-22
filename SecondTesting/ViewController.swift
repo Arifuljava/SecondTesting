@@ -7,6 +7,8 @@
 
 import UIKit
 import CoreBluetooth
+import Printer
+import Printer
 
 class ViewController: UIViewController ,  CBCentralManagerDelegate, CBPeripheralDelegate, UITableViewDelegate, UITableViewDataSource{
     var coreCenter = CBCentralManager();
@@ -176,35 +178,27 @@ class ViewController: UIViewController ,  CBCentralManagerDelegate, CBPeripheral
                        if characteristic.properties.contains(.writeWithoutResponse) {
                            printerCharacteristic = characteristic
                            var ttt = "fggfgfg"
+                           print(characteristic)
                            guard let data = ttt.data(using: .utf8) else { return }
                            
                            peripheral.writeValue(data, for: printerCharacteristic, type: .withoutResponse)
                            print("print ready")
+                           //
+                           
+                          
+                           
+                           
+                           
                            break
                        }
                    }
            
-    /*
-     func convertImageToRaster(image: UIImage, width: Int) -> [UInt8]? {
-       
-         // Resize the image to the desired width while maintaining the aspect ratio
-         let targetSize = CGSize(width: 200, height: 200) // Set the desired dimensions
-         let resizedImage =
-         // Convert the image to grayscale
-         guard let grayscaleImage = resizedImage.convertToGrayscale() else {
-             return nil
-         }
-         
-         // Convert the grayscale image to raster format
-         guard let rasterBytes = grayscaleImage.convertToRaster() else {
-             return nil
-         }
-         
-         return rasterBytes
-      
-         return rasterBytes
-     }
-     */
+          
+           
+           
+   
+     
+     
     func printImageOnPrinter(rasterBytes: [UInt8], on peripheral: CBPeripheral, with characteristic: CBCharacteristic) {
         // Create the ESC/POS command for printing raster data
         var command: [UInt8] = []
@@ -221,5 +215,31 @@ class ViewController: UIViewController ,  CBCentralManagerDelegate, CBPeripheral
     }
    
 }
-
+    func convertImageToBitmap(image: UIImage) -> Data? {
+        guard let cgImage = image.cgImage else { return nil }
+        
+        let width = cgImage.width
+        let height = cgImage.height
+        let colorSpace = CGColorSpaceCreateDeviceGray()
+        
+        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue)
+        guard let context = CGContext(data: nil,
+                                      width: width,
+                                      height: height,
+                                      bitsPerComponent: 8,
+                                      bytesPerRow: 0,
+                                      space: colorSpace,
+                                      bitmapInfo: bitmapInfo.rawValue) else {
+            return nil
+        }
+        
+        let rect = CGRect(x: 0, y: 0, width: width, height: height)
+        context.draw(cgImage, in: rect)
+        guard let bitmapData = context.data else { return nil }
+        
+        let dataSize = width * height
+        let buffer = UnsafeBufferPointer(start: bitmapData.assumingMemoryBound(to: UInt8.self), count: dataSize)
+        
+        return Data(buffer: buffer)
+    }
 }

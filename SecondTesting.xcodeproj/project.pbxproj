@@ -16,6 +16,7 @@
 		257210D52A19EC7A002723EA /* SecondTestingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257210D42A19EC7A002723EA /* SecondTestingTests.swift */; };
 		257210DF2A19EC7A002723EA /* SecondTestingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257210DE2A19EC7A002723EA /* SecondTestingUITests.swift */; };
 		257210E12A19EC7A002723EA /* SecondTestingUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257210E02A19EC7A002723EA /* SecondTestingUITestsLaunchTests.swift */; };
+		257210EF2A1A214A002723EA /* Printer in Frameworks */ = {isa = PBXBuildFile; productRef = 257210EE2A1A214A002723EA /* Printer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				257210EF2A1A214A002723EA /* Printer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +145,9 @@
 			dependencies = (
 			);
 			name = SecondTesting;
+			packageProductDependencies = (
+				257210EE2A1A214A002723EA /* Printer */,
+			);
 			productName = SecondTesting;
 			productReference = 257210BA2A19EC78002723EA /* SecondTesting.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +220,9 @@
 				Base,
 			);
 			mainGroup = 257210B12A19EC78002723EA;
+			packageReferences = (
+				257210ED2A1A214A002723EA /* XCRemoteSwiftPackageReference "Printer" */,
+			);
 			productRefGroup = 257210BB2A19EC78002723EA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -628,6 +636,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		257210ED2A1A214A002723EA /* XCRemoteSwiftPackageReference "Printer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/KevinGong2013/Printer.git";
+			requirement = {
+				branch = refactor;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		257210EE2A1A214A002723EA /* Printer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 257210ED2A1A214A002723EA /* XCRemoteSwiftPackageReference "Printer" */;
+			productName = Printer;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 257210B22A19EC78002723EA /* Project object */;
 }
