@@ -178,6 +178,10 @@ class ViewController: UIViewController ,  CBCentralManagerDelegate, CBPeripheral
                        if characteristic.properties.contains(.writeWithoutResponse) {
                            printerCharacteristic = characteristic
                            var ttt = "Bangladesh, to the east of India on the Bay of Bengal, is a South Asian country marked by lush greenery and many waterways. Its Padma (Ganges), Meghna and Jamuna rivers create fertile plains, and travel by boat is common. On the southern coast, the Sundarbans, an enormous mangrove forest shared with Eastern India, is home to the royal Bengal tiger.   \r\n\n\n"
+                           
+                           
+                           
+                           var tttui = " On the southern coast, the Sundarbans, an enormous mangrove forest shared with Eastern India, is home to the royal Bengal tiger.   \r\n\n\n"
                            print(characteristic)
                            guard let data = ttt.data(using: .utf8) else { return }
                            
@@ -190,10 +194,11 @@ class ViewController: UIViewController ,  CBCentralManagerDelegate, CBPeripheral
                            guard let image = UIImage(named: "demo") else { return  }
                            
                         
-                           guard let imageData = convertImageToBitmap(image : image) else { return }
+                           guard let imageData = convertImageToBitmap(image : image) else {
+                               return }
                            peripheral.writeValue(imageData, for: characteristic, type: .withoutResponse)
                            
-                           
+                           print("With Response")
                            
                            break
                        }
