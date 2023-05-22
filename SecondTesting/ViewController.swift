@@ -177,7 +177,7 @@ class ViewController: UIViewController ,  CBCentralManagerDelegate, CBPeripheral
                    for characteristic in characteristics {
                        if characteristic.properties.contains(.writeWithoutResponse) {
                            printerCharacteristic = characteristic
-                           var ttt = "fggfgfg"
+                           var ttt = "Bangladesh, to the east of India on the Bay of Bengal, is a South Asian country marked by lush greenery and many waterways. Its Padma (Ganges), Meghna and Jamuna rivers create fertile plains, and travel by boat is common. On the southern coast, the Sundarbans, an enormous mangrove forest shared with Eastern India, is home to the royal Bengal tiger.   \r\n\n\n"
                            print(characteristic)
                            guard let data = ttt.data(using: .utf8) else { return }
                            
@@ -185,7 +185,13 @@ class ViewController: UIViewController ,  CBCentralManagerDelegate, CBPeripheral
                            print("print ready")
                            //
                            
-                          
+                          //de
+        
+                           guard let image = UIImage(named: "demo") else { return  }
+                           
+                        
+                           guard let imageData = convertImageToBitmap(image : image) else { return }
+                           peripheral.writeValue(imageData, for: characteristic, type: .withoutResponse)
                            
                            
                            
@@ -211,11 +217,17 @@ class ViewController: UIViewController ,  CBCentralManagerDelegate, CBPeripheral
         
         // Send the command to the printer characteristic
         let data = Data(bytes: command)
+        guard let image = UIImage(named: "demo") else { return  }
+        
         peripheral.writeValue(data, for: characteristic, type: .withoutResponse)
+        guard let imageData = convertImageToBitmap(image : image) else { return }
+        peripheral.writeValue(imageData, for: characteristic, type: .withoutResponse)
+       /// peripheral.writeValue(convertImageToBitmap("print"), for: characteristic, type: .withoutResponse)
     }
    
 }
     func convertImageToBitmap(image: UIImage) -> Data? {
+        print("get")
         guard let cgImage = image.cgImage else { return nil }
         
         let width = cgImage.width
@@ -232,6 +244,7 @@ class ViewController: UIViewController ,  CBCentralManagerDelegate, CBPeripheral
                                       bitmapInfo: bitmapInfo.rawValue) else {
             return nil
         }
+       
         
         let rect = CGRect(x: 0, y: 0, width: width, height: height)
         context.draw(cgImage, in: rect)
@@ -239,7 +252,12 @@ class ViewController: UIViewController ,  CBCentralManagerDelegate, CBPeripheral
         
         let dataSize = width * height
         let buffer = UnsafeBufferPointer(start: bitmapData.assumingMemoryBound(to: UInt8.self), count: dataSize)
+        print("Bitmap Value : "+buffer.debugDescription)
         
         return Data(buffer: buffer)
+    }
+    func imageDataPrint( dataimge: Data)
+    {
+       
     }
 }
