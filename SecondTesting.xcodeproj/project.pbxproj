@@ -17,6 +17,7 @@
 		257210DF2A19EC7A002723EA /* SecondTestingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257210DE2A19EC7A002723EA /* SecondTestingUITests.swift */; };
 		257210E12A19EC7A002723EA /* SecondTestingUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257210E02A19EC7A002723EA /* SecondTestingUITestsLaunchTests.swift */; };
 		257210EF2A1A214A002723EA /* Printer in Frameworks */ = {isa = PBXBuildFile; productRef = 257210EE2A1A214A002723EA /* Printer */; };
+		25A4F0162A1C5F0800A9D103 /* ImageViewMyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A4F0152A1C5F0800A9D103 /* ImageViewMyController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		257210DA2A19EC7A002723EA /* SecondTestingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SecondTestingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		257210DE2A19EC7A002723EA /* SecondTestingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondTestingUITests.swift; sourceTree = "<group>"; };
 		257210E02A19EC7A002723EA /* SecondTestingUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondTestingUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		25A4F0152A1C5F0800A9D103 /* ImageViewMyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewMyController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 			children = (
 				257210BD2A19EC78002723EA /* AppDelegate.swift */,
 				257210BF2A19EC78002723EA /* SceneDelegate.swift */,
+				25A4F0152A1C5F0800A9D103 /* ImageViewMyController.swift */,
 				257210C12A19EC78002723EA /* ViewController.swift */,
 				257210C32A19EC78002723EA /* Main.storyboard */,
 				257210C62A19EC7A002723EA /* Assets.xcassets */,
@@ -268,6 +271,7 @@
 			files = (
 				257210C22A19EC78002723EA /* ViewController.swift in Sources */,
 				257210BE2A19EC78002723EA /* AppDelegate.swift in Sources */,
+				25A4F0162A1C5F0800A9D103 /* ImageViewMyController.swift in Sources */,
 				257210C02A19EC78002723EA /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

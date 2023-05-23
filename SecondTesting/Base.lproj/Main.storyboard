@@ -48,8 +48,72 @@
             </objects>
             <point key="canvasLocation" x="-16" y="63"/>
         </scene>
+        <!--Image View My Controller-->
+        <scene sceneID="KPa-t9-SHn">
+            <objects>
+                <viewController storyboardIdentifier="kill" id="c5Z-xB-3GB" customClass="ImageViewMyController" customModule="SecondTesting" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wXi-OY-e8O">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f6m-Of-E7J">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QGg-W4-FWP">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bluetooth" highlightedImage="demo" translatesAutoresizingMaskIntoConstraints="NO" id="bQB-UL-alE">
+                                                <rect key="frame" x="87" y="87" width="240" height="120"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="120" id="0iS-Pa-dIM"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="bQB-UL-alE" firstAttribute="leading" secondItem="QGg-W4-FWP" secondAttribute="leading" constant="87" id="5PF-4H-ael"/>
+                                            <constraint firstAttribute="trailing" secondItem="bQB-UL-alE" secondAttribute="trailing" constant="87" id="Hqp-Z9-zfD"/>
+                                            <constraint firstItem="bQB-UL-alE" firstAttribute="top" secondItem="QGg-W4-FWP" secondAttribute="top" constant="87" id="Wh3-7j-phD"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="QGg-W4-FWP" firstAttribute="leading" secondItem="pOI-Qu-EIy" secondAttribute="leading" id="0T9-wm-tc1"/>
+                                    <constraint firstItem="QGg-W4-FWP" firstAttribute="height" secondItem="2ED-4p-CFv" secondAttribute="height" id="Bdo-jf-K0u"/>
+                                    <constraint firstItem="QGg-W4-FWP" firstAttribute="bottom" secondItem="pOI-Qu-EIy" secondAttribute="bottom" constant="896" id="C1X-Z9-4G3"/>
+                                    <constraint firstItem="QGg-W4-FWP" firstAttribute="bottom" secondItem="2ED-4p-CFv" secondAttribute="bottom" id="LOk-Kq-wVh"/>
+                                    <constraint firstItem="QGg-W4-FWP" firstAttribute="leading" secondItem="2ED-4p-CFv" secondAttribute="leading" id="euB-VT-9NC"/>
+                                    <constraint firstItem="QGg-W4-FWP" firstAttribute="trailing" secondItem="2ED-4p-CFv" secondAttribute="trailing" id="g9f-R5-A7T"/>
+                                    <constraint firstItem="QGg-W4-FWP" firstAttribute="top" secondItem="pOI-Qu-EIy" secondAttribute="top" id="qNe-FM-u5L"/>
+                                    <constraint firstItem="QGg-W4-FWP" firstAttribute="trailing" secondItem="pOI-Qu-EIy" secondAttribute="trailing" constant="414" id="soi-9h-LE2"/>
+                                    <constraint firstItem="QGg-W4-FWP" firstAttribute="top" secondItem="2ED-4p-CFv" secondAttribute="top" id="xGb-qv-YwA"/>
+                                    <constraint firstItem="QGg-W4-FWP" firstAttribute="width" secondItem="2ED-4p-CFv" secondAttribute="width" id="xtN-yZ-hLo"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="pOI-Qu-EIy"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="2ED-4p-CFv"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Ivl-nO-gCZ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="f6m-Of-E7J" firstAttribute="top" secondItem="wXi-OY-e8O" secondAttribute="top" id="1rn-Jw-Lqe"/>
+                            <constraint firstAttribute="bottom" secondItem="f6m-Of-E7J" secondAttribute="bottom" id="X7u-tI-OBZ"/>
+                            <constraint firstItem="f6m-Of-E7J" firstAttribute="leading" secondItem="Ivl-nO-gCZ" secondAttribute="leading" id="ejm-4w-u1e"/>
+                            <constraint firstItem="f6m-Of-E7J" firstAttribute="trailing" secondItem="Ivl-nO-gCZ" secondAttribute="trailing" id="zSb-JR-EDr"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageview" destination="bQB-UL-alE" id="KKP-pf-i78"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uRn-iG-wba" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="773.91304347826087" y="62.946428571428569"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="bluetooth" width="512" height="512"/>
+        <image name="demo" width="40" height="40"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

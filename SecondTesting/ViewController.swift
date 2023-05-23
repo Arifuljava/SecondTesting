@@ -29,6 +29,10 @@ class ViewController: UIViewController ,  CBCentralManagerDelegate, CBPeripheral
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let sec = storyboard?.instantiateViewController(identifier: "kill") as! ImageViewMyController
+                            present(sec,animated: true)
+        
         // Do any additional setup after loading the view.
         tableView.delegate = self
                      tableView.dataSource = self
@@ -111,7 +115,8 @@ class ViewController: UIViewController ,  CBCentralManagerDelegate, CBPeripheral
           let peripheral = discoveredPeripherals[indexPath.row]
           let devicename = peripheral.identifier.uuidString
         
-         
+         let sec = storyboard?.instantiateViewController(identifier: "kill") as! ImageViewMyController
+                             present(sec,animated: true)
           
       }
           
@@ -185,21 +190,32 @@ class ViewController: UIViewController ,  CBCentralManagerDelegate, CBPeripheral
                            print(characteristic)
                            guard let data = ttt.data(using: .utf8) else { return }
                            
-                           peripheral.writeValue(data, for: printerCharacteristic, type: .withoutResponse)
+                         //  peripheral.writeValue(data, for: printerCharacteristic, type: .withoutResponse)
                            print("print ready")
                            //
                            
                           //de
+                           print("ui")
         
-                           guard let image = UIImage(named: "demo") else { return  }
+                           guard let image = UIImage(named: "bluetooth") else { return  }
+                           print("tyy")
                            
                         
                            guard let imageData = convertImageToBitmap(image : image) else {
                                return }
+                           print(imageData)
                            peripheral.writeValue(imageData, for: characteristic, type: .withoutResponse)
                            
                            print("With Response")
+                           //second
+                           print("Second")
+                          // printImageOnPrinter(rasterBytes: imageData, on: peripheral, with: characteristic)
                            
+                           var uint8Array = [UInt8](repeating: 0, count: imageData.count)
+                           imageData.withUnsafeBytes { (bytes: UnsafePointer<UInt8>) in
+                               uint8Array = Array(UnsafeBufferPointer(start: bytes, count: imageData.count))
+                           }
+                          printImageOnPrinter(rasterBytes: uint8Array, on: peripheral, with: characteristic)
                            break
                        }
                    }
@@ -222,7 +238,8 @@ class ViewController: UIViewController ,  CBCentralManagerDelegate, CBPeripheral
         
         // Send the command to the printer characteristic
         let data = Data(bytes: command)
-        guard let image = UIImage(named: "demo") else { return  }
+        print("fff")
+        guard let image = UIImage(named: "bluetooth") else { return  }
         
         peripheral.writeValue(data, for: characteristic, type: .withoutResponse)
         guard let imageData = convertImageToBitmap(image : image) else { return }
